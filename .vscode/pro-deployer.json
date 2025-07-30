@@ -1,0 +1,29 @@
+{
+	"enableStatusBarItem": true,
+	"enableQuickPick": true,
+	"uploadOnSave": true,
+	"autoDelete": true,
+	"checkGitignore": false,
+	"activeTargets": [
+		"Villa_FTP"
+	],
+	"concurrency": 5,
+	"ignore": [
+		".git/**/*",
+		".vscode/**/*"
+	],
+	"include": [],
+	"targets": [
+		{
+			"name": "Villa_FTP",
+			"type": "ftp",
+			"host": "82.25.96.51",
+			"port": 21,
+			"user": "u721549786.FTPVilla",
+			"password": "?T5d5?$H6d0qKsEA",
+			"dir": "",
+			"baseDir": "",
+			"transferDataType": "binary"
+		}
+	]
+}
