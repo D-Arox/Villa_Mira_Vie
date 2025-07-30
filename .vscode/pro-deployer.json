@@ -21,8 +21,8 @@
 			"port": 21,
 			"user": "u721549786.FTPVilla",
 			"password": "?T5d5?$H6d0qKsEA",
-			"dir": "",
-			"baseDir": "",
+			"dir": "/public_html",
+			"baseDir": "/public_html",
 			"transferDataType": "binary"
 		}
 	]
