@@ -3,7 +3,7 @@ body.nav-open {
 }
 
 .navigation {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     right: 0;
@@ -14,6 +14,7 @@ body.nav-open {
     border-bottom: 1px solid rgba(0, 119, 190, 0.2);
     transition: var(--transition-smooth);
     padding: 0;
+    transform: translateY(0) !important;
 }
 
 .navigation.scrolled {
@@ -120,12 +121,29 @@ body.nav-open {
 }
 
 .nav-link.scrolled-to {
-    color: var(--white);
+    color: var(--accent-gold) !important;
 }
 
 .nav-link.scrolled-to::after {
+    width: 100% !important;
+    background: var(--accent-gold) !important;
+}
+
+.nav-item:hover .nav-link {
+    color: var(--accent-gold);
+}
+
+.nav-item:hover .nav-link::after {
     width: 100%;
-    background: var(--accent-gold);
+}
+
+.nav-link.scrolled-to {
+    color: var(--accent-gold) !important;
+}
+
+.nav-link.scrolled-to::after {
+    width: 100% !important;
+    background: var(--accent-gold) !important;
 }
 
 /* Dropdown menus */
@@ -423,7 +441,7 @@ body.nav-open {
 
 /* Sticky navigation effects */
 .navigation.sticky-shrink {
-    transform: translateY(0);
+    transform: translateY(0) !important;
 }
 
 .navigation.sticky-shrink .nav-container {
@@ -440,10 +458,6 @@ body.nav-open {
 }
 
 /* Body scroll lock for mobile menu */
-body.nav-open {
-    overflow: hidden;
-}
-
 @media (max-width: 992px) {
     body.nav-open .nav-menu {
         position: fixed;

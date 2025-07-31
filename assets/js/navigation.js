@@ -34,25 +34,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    let lastScrollTop = 0;
     let ticking = false;
 
     function updateNavigation() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
+        // Add scrolled class for background change
         if (scrollTop > 50) {
             navigation.classList.add('scrolled');
         } else {
             navigation.classList.remove('scrolled');
         }
 
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            navigation.style.transform = 'translateY(-100%)';
-        } else {
-            navigation.style.transform = 'translateY(0)';
-        }
-
-        lastScrollTop = scrollTop;
+        // Keep navigation always visible (removed the hide/show logic)
+        navigation.style.transform = 'translateY(0)';
+        
         ticking = false;
     }
 
@@ -65,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', requestTick);
 
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -97,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Fixed section highlighting function
     function highlightActiveSection() {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -104,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let current = '';
         const scrollTop = window.pageYOffset;
         
+        // Find the current section
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 100;
             const sectionHeight = section.offsetHeight;
@@ -113,14 +112,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        // Remove scrolled-to class from all links and add only to current
         navLinks.forEach(link => {
             link.classList.remove('scrolled-to');
             const href = link.getAttribute('href');
-            if (href && href.includes('#' + current)) {
+            // Check if this specific link matches the current section
+            if (href && href === '#' + current) {
                 link.classList.add('scrolled-to');
             }
         });
     }
 
-    window.addEventListener('scroll', highlightActiveSection);
+    // Add scroll listener for section highlighting
+    window.addEventListener('scroll', function() {
+        requestTick();
+        highlightActiveSection();
+    });
+
+    // Initial call to set correct state
+    highlightActiveSection();
 });
