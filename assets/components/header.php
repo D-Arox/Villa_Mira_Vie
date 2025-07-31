@@ -78,7 +78,7 @@ $content = isset($header_content[$lang][$current_page])
     : $header_content[$lang]['index'];
 
 $hero_images = [
-    'index' => 'https://picsum.photos/1920/1080?random=1',
+    'index' => '/assets/images/hero_background_1.jpeg',
     'gallery' => 'https://picsum.photos/1920/1080?random=2',
     'contact' => 'https://picsum.photos/1920/1080?random=3',
     'information' => 'https://picsum.photos/1920/1080?random=4'

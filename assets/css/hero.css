@@ -28,6 +28,7 @@
     object-fit: cover;
     object-position: center;
     transition: transform 8s ease-out;
+    filter: brightness(60%);
 }
 
 .hero-image:hover {
@@ -59,11 +60,12 @@
 }
 
 .hero-title {
-    font-size: 4rem;
-    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-xlbold);
     margin-bottom: var(--spacing-md);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     animation-delay: 0.2s;
+    color: var(--white);
 }
 
 .hero-subtitle {

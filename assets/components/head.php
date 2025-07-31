@@ -102,12 +102,11 @@ if ($lang === 'en') {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 <!-- CSS Files -->
 <link rel="stylesheet" href="/assets/css/global.css">
 <link rel="stylesheet" href="/assets/css/navigation.css">
-<link rel="stylesheet" href="/assets/css/cookie_modal.css">
+<link rel="stylesheetS" href="/assets/css/cookie_modal.css">
 <link rel="stylesheet" href="/assets/css/hero.css">
 <link rel="stylesheet" href="/assets/css/contact.css">
 <link rel="stylesheet" href="/assets/css/calendar.css">
