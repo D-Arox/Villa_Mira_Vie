@@ -83,12 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
             loadGoogleFonts();
         }
 
-        // Handle analytics (if implemented)
-        if (consent.analytics) {
-            // Initialize analytics
-            console.log('Analytics enabled');
-        }
-
         // Dispatch custom event for other scripts
         window.dispatchEvent(new CustomEvent('cookieConsentUpdate', { 
             detail: consent 

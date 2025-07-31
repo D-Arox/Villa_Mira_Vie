@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize hero animations
     const heroElements = document.querySelectorAll('.animate-fade-in');
-    
-    // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -20,46 +17,91 @@ document.addEventListener('DOMContentLoaded', function() {
         element.style.animationPlayState = 'paused';
         observer.observe(element);
     });
-    
-    // Parallax effect for hero background
-    const heroImage = document.querySelector('.hero-image');
-    if (heroImage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            heroImage.style.transform = `translate3d(0, ${rate}px, 0) scale(1.05)`;
-        });
+
+    if (typeof hero_background === 'function') {
+        hero_background();
     }
     
-    // Smooth scroll for scroll indicator
+    initScrollIndicator();
+    initPageFeatures();
+});
+
+function initScrollIndicator() {
     const scrollIndicator = document.querySelector('.scroll-down');
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector('#content') || document.querySelector('main');
-            if (target) {
-                const offsetTop = target.offsetTop - 80; // Account for fixed nav
+    
+    if (!scrollIndicator) return;
+    
+    scrollIndicator.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const target = document.querySelector('#content') || document.querySelector('main');
+        
+        if (target) {
+            const offsetTop = target.offsetTop - 80;
+            
+            // Smooth scroll with fallback for older browsers
+            if ('scrollBehavior' in document.documentElement.style) {
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
                 });
+            } else {
+                smoothScrollTo(offsetTop, 800);
+            }
+        }
+    });
+}
+
+function initPageFeatures() {
+    initAccessibilityFeatures();
+}
+
+function initAccessibilityFeatures() {
+    const interactiveElements = document.querySelectorAll('.hero-feature, .btn');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                element.click();
             }
         });
+
+        if (!element.hasAttribute('tabindex') && element.tagName !== 'A' && element.tagName !== 'BUTTON') {
+            element.setAttribute('tabindex', '0');
+        }
+    });
+}
+
+function smoothScrollTo(targetPosition, duration) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const startTime = performance.now();
+    
+    function animation(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const ease = 1 - Math.pow(1 - progress, 3);
+        
+        window.scrollTo(0, startPosition + (distance * ease));
+        
+        if (progress < 1) {
+            requestAnimationFrame(animation);
+        }
     }
     
-    // Lazy load hero image
-    if ('loading' in HTMLImageElement.prototype) {
-        heroImage.loading = 'eager'; // Hero images should load immediately
+    requestAnimationFrame(animation);
+}
+
+window.addEventListener('error', function(e) {
+    if (e.message.includes('hero_background')) {
+        console.warn('Hero background functionality not available. Make sure image_slider.js is loaded.');
     }
-    
-    // Add loading state management
-    heroImage.addEventListener('load', function() {
-        this.classList.add('loaded');
-    });
-    
-    // Add error handling for image loading
-    heroImage.addEventListener('error', function() {
-        console.warn('Hero image failed to load, using fallback');
-        this.src = '/assets/images/hero-fallback.jpg';
-    });
 });
+
+if ('performance' in window && 'measure' in performance) {
+    window.addEventListener('load', function() {
+        performance.mark('main-js-loaded');
+    });
+}

@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $lang = 'de';
 if (isset($_GET['lang'])) {
     $lang = $_GET['lang'] === 'en' ? 'en' : 'de';

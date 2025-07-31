@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $lang = 'de';
 if (isset($_GET['lang'])) {
     $lang = $_GET['lang'] === 'en' ? 'en' : 'de';
@@ -43,7 +47,7 @@ function getUrl($page, $lang) {
     <div class="nav-container">
         <!-- Brand/Logo -->
         <a href="<?php echo getUrl('index', $lang); ?>" class="nav-brand">
-            <div class="nav-brand-icon">VM</div>
+            <div class="nav-brand-icon"><img class="icon" src="/assets/icons/favicon.png" alt=""></div>
             Villa MiraVie
         </a>
 
