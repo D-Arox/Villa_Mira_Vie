@@ -134,14 +134,14 @@ if ($current_page !== 'index') {
                 
                 <div class="hero-actions animate-fade-in">
                     <?php if ($current_page === 'index'): ?>
-                        <a href="<?php echo 'contact.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>#booking" class="btn btn-primary btn-large">
+                        <a href="<?php echo '#booking' ?>" class="btn btn-primary btn-large">
                             <?php echo $content['cta_primary']; ?>
                         </a>
-                        <a href="<?php echo 'gallery.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>" class="btn btn-outline-light btn-large">
+                        <a href="<?php echo '#gallery' ?>" class="btn btn-outline-light btn-large">
                             <?php echo $content['cta_secondary']; ?>
                         </a>
                     <?php elseif ($current_page === 'gallery'): ?>
-                        <a href="<?php echo 'contact.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>" class="btn btn-primary btn-large">
+                        <a href="<?php echo '#booking'  ?>" class="btn btn-primary btn-large">
                             <?php echo $content['cta_primary']; ?>
                         </a>
                         <a href="<?php echo 'index.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>" class="btn btn-outline-light btn-large">
@@ -155,10 +155,10 @@ if ($current_page !== 'index') {
                             <?php echo $content['cta_secondary']; ?>
                         </a>
                     <?php elseif ($current_page === 'information'): ?>
-                        <a href="<?php echo 'contact.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>" class="btn btn-secondary btn-large">
+                        <a href="<?php echo '#booking' ?> class="btn btn-secondary btn-large">
                             <?php echo $content['cta_primary']; ?>
                         </a>
-                        <a href="<?php echo 'gallery.php' . ($lang !== 'de' ? '?lang=' . $lang : ''); ?>" class="btn btn-outline-light btn-large">
+                        <a href="<?php echo '#gallery' ?>" class="btn btn-outline-light btn-large">
                             <?php echo $content['cta_secondary']; ?>
                         </a>
                     <?php endif; ?>

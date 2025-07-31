@@ -39,7 +39,7 @@ function isActive($page) {
 }
 
 function getUrl($page, $lang) {
-    return $page . '.php' . ($lang !== 'de' ? '?lang=' . $lang : '');
+    return '#' . $page;
 }
 ?>
 
@@ -99,37 +99,3 @@ function getUrl($page, $lang) {
         </button>
     </div>
 </nav>
-<style>
-    body.nav-open {
-        overflow: hidden;
-    }
-
-    @media (max-width: 992px) {
-        body.nav-open .nav-menu {
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-    }
-
-    .nav-toggle:focus {
-        outline: 2px solid var(--primary-blue);
-        outline-offset: 2px;
-    }
-
-    .navigation.loading {
-        pointer-events: none;
-    }
-
-    .navigation.loading::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.8);
-        z-index: 1;
-    }
-</style>

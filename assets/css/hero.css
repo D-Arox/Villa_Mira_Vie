@@ -326,18 +326,6 @@
     }
 }
 
-/* Dark mode considerations */
-@media (prefers-color-scheme: dark) {
-    .hero-overlay {
-        background: linear-gradient(
-            135deg,
-            rgba(0, 119, 190, 0.9) 0%,
-            rgba(0, 90, 138, 0.8) 50%,
-            rgba(232, 184, 109, 0.6) 100%
-        );
-    }
-}
-
 /* High contrast mode */
 @media (prefers-contrast: high) {
     .hero-overlay {
