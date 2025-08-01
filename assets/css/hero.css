@@ -130,6 +130,7 @@
     border: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border-radius: var(--border-radius-small);
 }
 
 .hero-actions .btn-secondary {

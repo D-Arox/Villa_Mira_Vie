@@ -7,11 +7,11 @@ body.nav-open {
     top: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-fixed);
+    z-index: 9999;
     background: rgba(26, 26, 26, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 119, 190, 0.2);
+    /* border-bottom: 1px solid rgba(0, 119, 190, 0.2); */
     transition: var(--transition-smooth);
     padding: 0;
     transform: translateY(0) !important;
@@ -239,6 +239,7 @@ body.nav-open {
 .nav-cta .btn {
     padding: var(--spacing-xs) var(--spacing-md);
     font-size: 0.9rem;
+    border-radius: var(--border-radius-small);
 }
 
 /* Mobile Toggle */

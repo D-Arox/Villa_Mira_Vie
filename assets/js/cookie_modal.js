@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsBtn = document.getElementById('cookie-settings');
     const modalCloseBtn = document.getElementById('cookie-modal-close');
     const saveSettingsBtn = document.getElementById('save-cookie-settings');
-    const modalBackdrop = settingsModal.querySelector('.cookie-modal-backdrop');
+    const modalBackdrop = settingsModal?.querySelector('.cookie-modal-backdrop');
 
     // Cookie management
     const COOKIE_NAME = 'villa_cookie_consent';
@@ -31,142 +31,155 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showBanner() {
-        cookieBanner.style.display = 'block';
-        setTimeout(() => {
-            cookieBanner.classList.add('show');
-        }, 100);
+        if (cookieBanner) {
+            cookieBanner.style.display = 'block';
+            // Force reflow
+            cookieBanner.offsetHeight;
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 10);
+        }
     }
 
     function hideBanner() {
-        cookieBanner.classList.remove('show');
-        setTimeout(() => {
-            cookieBanner.style.display = 'none';
-        }, 300);
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 300);
+        }
     }
 
     function showModal() {
-        settingsModal.style.display = 'flex';
-        setTimeout(() => {
-            settingsModal.classList.add('show');
-        }, 10);
-        document.body.style.overflow = 'hidden';
+        if (settingsModal) {
+            settingsModal.style.display = 'flex';
+            // Force reflow
+            settingsModal.offsetHeight;
+            setTimeout(() => {
+                settingsModal.classList.add('show');
+            }, 10);
+        }
     }
 
     function hideModal() {
-        settingsModal.classList.remove('show');
-        setTimeout(() => {
-            settingsModal.style.display = 'none';
-            document.body.style.overflow = '';
-        }, 300);
+        if (settingsModal) {
+            settingsModal.classList.remove('show');
+            setTimeout(() => {
+                settingsModal.style.display = 'none';
+            }, 300);
+        }
     }
 
     function saveConsent(preferences) {
         const consentData = {
-            necessary: true,
+            necessary: true, // Always true
             analytics: preferences.analytics || false,
             external: preferences.external || false,
-            timestamp: new Date().toISOString()
+            timestamp: Date.now()
         };
         
         setCookie(COOKIE_NAME, JSON.stringify(consentData), COOKIE_EXPIRY);
+        hideBanner();
+        hideModal();
         
         // Apply consent preferences
         applyConsentPreferences(consentData);
-        
-        hideBanner();
-        hideModal();
     }
 
     function applyConsentPreferences(consent) {
         // Handle Google Fonts
         if (consent.external) {
-            loadGoogleFonts();
+            // Google Fonts already loaded, but you could add analytics here
+            console.log('External resources enabled');
         }
-
-        // Dispatch custom event for other scripts
-        window.dispatchEvent(new CustomEvent('cookieConsentUpdate', { 
-            detail: consent 
-        }));
-    }
-
-    function loadGoogleFonts() {
-        if (!document.querySelector('link[href*="fonts.googleapis.com"]')) {
-            const link = document.createElement('link');
-            link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
-            link.rel = 'stylesheet';
-            document.head.appendChild(link);
+        
+        // Handle analytics
+        if (consent.analytics) {
+            // Add your analytics code here
+            console.log('Analytics enabled');
         }
-    }
-
-    function loadSavedPreferences() {
-        const consent = getCookie(COOKIE_NAME);
-        if (consent) {
-            try {
-                const preferences = JSON.parse(consent);
-                document.getElementById('analytics-cookies').checked = preferences.analytics;
-                document.getElementById('external-resources').checked = preferences.external;
-                return preferences;
-            } catch (e) {
-                return null;
-            }
-        }
-        return null;
     }
 
     // Event listeners
-    acceptAllBtn.addEventListener('click', function() {
-        saveConsent({
-            analytics: true,
-            external: true
+    if (acceptAllBtn) {
+        acceptAllBtn.addEventListener('click', function() {
+            saveConsent({
+                analytics: true,
+                external: true
+            });
         });
-    });
-
-    acceptNecessaryBtn.addEventListener('click', function() {
-        saveConsent({
-            analytics: false,
-            external: false
-        });
-    });
-
-    settingsBtn.addEventListener('click', function() {
-        loadSavedPreferences();
-        showModal();
-    });
-
-    saveSettingsBtn.addEventListener('click', function() {
-        const preferences = {
-            analytics: document.getElementById('analytics-cookies').checked,
-            external: document.getElementById('external-resources').checked
-        };
-        saveConsent(preferences);
-    });
-
-    modalCloseBtn.addEventListener('click', hideModal);
-    modalBackdrop.addEventListener('click', hideModal);
-
-    // Initialize
-    const existingConsent = loadSavedPreferences();
-    if (!existingConsent) {
-        // Show banner after a short delay
-        setTimeout(showBanner, 1000);
-    } else {
-        // Apply existing preferences
-        applyConsentPreferences(existingConsent);
     }
 
-    // ESC key to close modal
+    if (acceptNecessaryBtn) {
+        acceptNecessaryBtn.addEventListener('click', function() {
+            saveConsent({
+                analytics: false,
+                external: false
+            });
+        });
+    }
+
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            showModal();
+        });
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', function() {
+            hideModal();
+        });
+    }
+
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', function() {
+            hideModal();
+        });
+    }
+
+    if (saveSettingsBtn) {
+        saveSettingsBtn.addEventListener('click', function() {
+            const analyticsCheck = document.getElementById('analytics-cookies');
+            const externalCheck = document.getElementById('external-cookies');
+            
+            saveConsent({
+                analytics: analyticsCheck?.checked || false,
+                external: externalCheck?.checked || false
+            });
+        });
+    }
+
+    // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && settingsModal.classList.contains('show')) {
+        if (e.key === 'Escape' && settingsModal?.classList.contains('show')) {
             hideModal();
         }
     });
 
-    // Export functions for global access
-    window.cookieConsent = {
-        show: showBanner,
-        showSettings: showModal,
-        getConsent: function() {
-            return loadSavedPreferences();
+    // Initialize on page load
+    function initializeCookieConsent() {
+        const existingConsent = getCookie(COOKIE_NAME);
+        
+        if (!existingConsent) {
+            // Show banner after a short delay for better UX
+            setTimeout(() => {
+                showBanner();
+            }, 1000);
+        } else {
+            try {
+                const consentData = JSON.parse(existingConsent);
+                applyConsentPreferences(consentData);
+            } catch (e) {
+                // Invalid cookie data, show banner again
+                console.warn('Invalid cookie consent data, showing banner again');
+                setTimeout(() => {
+                    showBanner();
+                }, 1000);
+            }
         }
-    };
+    }
+
+    // Start the cookie consent process
+    initializeCookieConsent();
 });
